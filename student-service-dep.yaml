@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-details
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project : student_details
+  template:
+    metadata:
+      labels:
+        project : student_details
+    spec:
+      containers:
+      - name: student-service
+        image: student-service-image
+      - name: postgresql-db
+        image: postgres-db-image:v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-service-config
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    project : student_details
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30001

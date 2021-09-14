@@ -1,0 +1,18 @@
+version: "3"
+services:
+  student:
+    container_name: student_details
+    build: .
+    environment:
+      - GO111MODULE=on
+    ports:
+      - 8080:8080
+  postgres:
+    container_name: postgres
+    image: config
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=student
+    ports:
+      - 5432:5433
